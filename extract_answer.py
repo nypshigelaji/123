@@ -80,6 +80,7 @@ def extract_ans(gold_path,generate_path):
 
 def knoworunknow_data(docs_path,gold_merge_path):
     doc_path = '/home/sda/wangzhijun/MedicalGPT/jbi/result/innate/llama3-8b-instruct'
+    
     fnames = sorted([fname for fname in os.listdir(doc_path) if fname.endswith(".jsonl") and 'merge' in fname])
 
     pattern = re.compile(r'["\']?(?:answer_choice)?["\']?:?\s*["\']?([A-D]):?')
@@ -232,8 +233,6 @@ def self_accessment_generate_answer(gold_path,generate_path):
     print(len(know_generation))
     print(len(gold))
 
-gold_path = '/home/sda/wangzhijun/MedicalGPT/jbi/data/MedMCQA.jsonl'
-generate_path = '/home/sda/wangzhijun/MedicalGPT/jbi/result/innate/llama3-8b-instruct/MedMCQA.jsonl'
 
 
 # extract_ans(gold_path,generate_path)
@@ -242,7 +241,7 @@ generate_path = '/home/sda/wangzhijun/MedicalGPT/jbi/result/innate/llama3-8b-ins
 
 
 def locate_answer(sentence:str):
-
+   
     ans = re.findall("^\s*(A|B|C|D)$", sentence)
     if len(ans) > 0:
         return ans[0].upper()
@@ -303,8 +302,8 @@ def extract_answer(gold_path,generate_path):
         for line in file:
             dictionary = json.loads(line)
             answer = dictionary['answer']
+            answer = re.sub("\s+", " ", answer)
             answer = answer.split('"answer_choice": "')[-1].strip()
-            print(locate_answer(answer))
             generate_list.append(locate_answer(answer))
     
     correct_num = 0
@@ -317,4 +316,9 @@ def extract_answer(gold_path,generate_path):
     acc = correct_num / total_num
     print(acc)
 
-extract_ans(gold_path,generate_path)
+gold_path = '/home/sda/wangzhijun/MedicalGPT/jbi/data/MMLU-Med.jsonl'
+generate_path = '/home/sda/wangzhijun/MedicalGPT/jbi/result/self-accessment/MMLU.jsonl'
+
+self_accessment_generate_answer(gold_path,generate_path)
+
+# extract_answer(gold_path,generate_path)

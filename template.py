@@ -12,9 +12,36 @@ Here are the potential choices:
 Please think step-by-step and generate your output in json:
 ''')
 
+general_cot_system_a = '''You are a helpful medical expert, and your task is to answer a multi-choice medical question. Please first think step-by-step and then choose the answer from the provided options. Organize your output in a json formatted as Dict{"step_by_step_thinking": Str(explanation), "answer_choice": Str{A/B/C/...}}. Your responses will be used for research purposes only, so please have a definite answer.'''
+
+general_cot_a = Template('''
+Here is the question:
+{{question}}
+
+Here are the potential choices:
+{{options}}
+
+Please think step-by-step and generate your output in json:
+''')
+
 general_medrag_system = '''You are a helpful medical expert, and your task is to answer a multi-choice medical question using the relevant documents. Please first think step-by-step and then choose the answer from the provided options. Organize your output in a json formatted as Dict{"step_by_step_thinking": Str(explanation), "answer_choice": Str{your answer}}. Your responses will be used for research purposes only, so please have a definite answer.'''
 
 general_medrag = Template('''
+Here are the relevant documents:
+{{context}}
+
+Here is the question:
+{{question}}
+
+Here are the potential choices:
+{{options}}
+
+Please think step-by-step and generate your output in json:
+''')
+
+general_medrag_system_a = '''You are a helpful medical expert, and your task is to answer a multi-choice medical question using the relevant documents. Please first think step-by-step and then choose the answer from the provided options. Organize your output in a json formatted as Dict{"step_by_step_thinking": Str(explanation), "answer_choice": Str{A/B/C/...}}. Your responses will be used for research purposes only, so please have a definite answer.'''
+
+general_medrag_a = Template('''
 Here are the relevant documents:
 {{context}}
 
@@ -98,6 +125,9 @@ follow_up_instruction_answer = '''Please first think step-by-step to analyze all
 
 simple_generate_system = '''You are a helpful medical expert, and your task is to answer a medical question. You do not need to provide an analysis; simply give the correct option directly. Organize your output in a json formatted as Dict{"answer_choice": Str{your answer}}. Your responses will be used for research purposes only, so please have a definite answer.'''
 simple_generate_prompt = Template('''Here is the question:\n{{question}}\nHere are the potential choices:\n{{options}}''')
+
+simple_generate_system_a = '''You are a helpful medical expert, and your task is to answer a medical question. You do not need to provide an analysis; simply give the correct option directly. Organize your output in a json formatted as Dict{"answer_choice": Str{A/B/C/...}}. Your responses will be used for research purposes only, so please have a definite answer.'''
+simple_generate_prompt_a = Template('''Here is the question:\n{{question}}\nHere are the potential choices:\n{{options}}''')
 
 
 self_accessment_system_1 = '''You are a helpful medical expert, and your task is to answer a medical question. You do not need to provide an analysis; simply give the correct option directly. If you are entirely confident in the solution to the problem, directly output the corresponding option. If you are not very certain about the solution, please respond with, "###I am not very sure about the answer to this question.". Your responses will be used for research purposes only, so please have a definite answer.'''
